@@ -1,10 +1,20 @@
-import { copyFile, readFile, readdir, writeFile } from 'node:fs/promises';
+import { copyFile, cp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 
 const repositoryPath = '/Inspira-';
 const publicDirectory = 'public';
 const outputDirectory = 'dist/client';
 const textExtensions = new Set(['.css', '.html', '.js', '.json', '.rsc', '.txt', '.xml']);
+
+// Vinext applies assetPrefix both to the generated URLs and to the output
+// directory. GitHub Pages already mounts this artifact at /Inspira-, so keep
+// the URLs prefixed while moving the generated runtime back to the artifact
+// root. Otherwise the browser requests /Inspira-/_next but the uploaded file
+// ends up at /Inspira-/Inspira-/_next.
+const prefixedRuntimeDirectory = join(outputDirectory, repositoryPath.slice(1), '_next');
+const runtimeDirectory = join(outputDirectory, '_next');
+await cp(prefixedRuntimeDirectory, runtimeDirectory, { recursive: true });
+await rm(join(outputDirectory, repositoryPath.slice(1)), { recursive: true });
 
 async function filesIn(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
