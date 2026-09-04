@@ -35,6 +35,7 @@ const localBindingConfig = {
 };
 
 export default defineConfig(async () => {
+  const isGitHubPages = process.env.GITHUB_PAGES === 'true';
   // Keep Wrangler and Miniflare state project-local. These are non-secret tool
   // settings; application environment belongs in ignored `.env*` files.
   process.env.WRANGLER_WRITE_LOGS ??= 'false';
@@ -49,13 +50,15 @@ export default defineConfig(async () => {
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,
-    plugins: [
-      vinext(),
-      sites(),
-      cloudflare({
-        viteEnvironment: { name: 'rsc', childEnvironments: ['ssr'] },
-        config: localBindingConfig,
-      }),
-    ],
+    plugins: isGitHubPages
+      ? [vinext()]
+      : [
+          vinext(),
+          sites(),
+          cloudflare({
+            viteEnvironment: { name: 'rsc', childEnvironments: ['ssr'] },
+            config: localBindingConfig,
+          }),
+        ],
   };
 });

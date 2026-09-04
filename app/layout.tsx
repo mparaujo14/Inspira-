@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Archivo_Black, Nunito_Sans, Young_Serif } from 'next/font/google';
 import './globals.css';
+export const dynamic = 'force-static';
 const display=Archivo_Black({weight:'400',subsets:['latin'],variable:'--font-display'}); const body=Nunito_Sans({subsets:['latin'],variable:'--font-body'}); const subtitle=Young_Serif({weight:'400',subsets:['latin'],variable:'--font-subtitle'});
 export const metadata:Metadata={title:'Inspira Más | Abre puertas al mundo',description:'Oportunidades, asesoría y mentoría para jóvenes que quieren construir un perfil que destaque.',openGraph:{title:'Tu potencial puede abrir puertas al mundo.',description:'Inspira Más conecta a jóvenes con oportunidades y les brinda herramientas para construir un perfil que destaque.',images:[{url:'/og.png',width:1200,height:630,alt:'Inspira Más - Tu potencial puede abrir puertas al mundo'}]},twitter:{card:'summary_large_image',title:'Tu potencial puede abrir puertas al mundo.',description:'Oportunidades, asesoría y mentoría para jóvenes.',images:['/og.png']}};
 export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="es"><body className={`${display.variable} ${body.variable} ${subtitle.variable}`}>{children}</body></html>}
