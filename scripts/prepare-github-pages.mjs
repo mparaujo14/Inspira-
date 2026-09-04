@@ -37,6 +37,13 @@ for (const outputFile of await filesIn(outputDirectory)) {
   for (const publicAsset of publicAssets) {
     contents = contents.replaceAll(publicAsset, `${repositoryPath}${publicAsset}`);
   }
+  // CSS assets are first rebased by Vinext under _next/static. Collapse the
+  // duplicated public prefix so section background images keep pointing to
+  // the public directory at the GitHub Pages project root.
+  contents = contents.replaceAll(
+    `${repositoryPath}/_next/static${repositoryPath}/`,
+    `${repositoryPath}/`,
+  );
   await writeFile(outputFile, contents);
 }
 
