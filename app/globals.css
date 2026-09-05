@@ -471,7 +471,7 @@ footer .logo>img:first-child{width:330px;height:135px;object-fit:cover;object-po
 .volunteer-actions{display:flex;justify-content:center;align-items:center;gap:24px;margin:auto auto 0;flex-wrap:wrap}
 .volunteer-actions .volunteer-button{margin:0;align-self:auto}
 .volunteer-instagram{background:#fff;color:var(--purple);box-shadow:5px 5px 0 var(--turquoise)}
-.testimonials article:first-child{grid-column:span 2}
+.testimonials{grid-auto-rows:1fr}\n.testimonials article{height:100%}\n.testimonials article:first-child{grid-column:auto}
 .testimonials article:first-child blockquote{font-size:20px;line-height:1.5}
 .final-cta{background:#ffd7e6;color:var(--purple);min-height:980px}
 .final-cta .final-logo{height:145px;margin-bottom:12px}
